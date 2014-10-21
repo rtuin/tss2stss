@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+"use strict";
+var fs = require('fs'),
+    mkdirp = require('mkdirp'),
+    path = require('path'),
+    libPath = path.join(__dirname, '../src/'),
+    Tss2Stss = require(libPath + 'Tss2Stss.js'),
+    argv = require('minimist')(process.argv.slice(2));
+
+if (argv._.length != 2) {
+    console.log('Please provide an input and output file.');
+}
+
+console.log('TSS2STSS v' + (require(path.join(__dirname, '/../package.json')).version) + ' by Richard Tuin - www.rtuin.nl');
+
+var inputPath = argv._[0],
+    inputFinder = require('findit')(inputPath),
+    converter = new Tss2Stss(),
+    outputPath = argv._[1];
+
+inputFinder.on('file', function (file, stat) {
+    if (file.toLowerCase().indexOf('.tss') != file.length - 4) {
+        return;
+    }
+
+    var normalizedPath = file.substr(inputPath.length);
+    if (normalizedPath.indexOf('/') == 0) {
+        normalizedPath = normalizedPath.replace('/', '');
+    }
+
+    var tssData = fs.readFileSync(file, {'encoding': 'utf8'}),
+        stssFilename = path.join(outputPath, normalizedPath.replace('.tss', '.stss'));
+
+    console.log('Converting ' + file + ' into ' + stssFilename);
+
+    mkdirp.sync(path.dirname(stssFilename));
+    fs.writeFileSync(stssFilename, converter.convert(tssData));
+});
