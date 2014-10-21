@@ -17,5 +17,13 @@
   },
   "bin": {
     "tss2stss": "bin/tss2stss"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rtuin/tss2stss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rtuin/tss2stss/issues"
+  },
+  "homepage": "https://github.com/rtuin/tss2stss"
 }
