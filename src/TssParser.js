@@ -49,7 +49,7 @@ TssParser.prototype.parse = function (tssTokens) {
             expected = ['CloseScope', 'PropertyDefinition'];
         } else if (tokenType === 'CloseScope') {
             scopeDepth--;
-            expected = ['ValueSeparator'];
+            expected = ['ValueSeparator', 'Selector'];
             if (scopeDepth) {
                 expected.push('CloseScope');
             }
