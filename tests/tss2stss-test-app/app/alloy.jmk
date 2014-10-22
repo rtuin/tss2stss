@@ -1,0 +1,58 @@
+
+task('pre:compile', stss);
+
+function stss(config, logger) { //--v0.2.1
+	var fs = require('fs'),
+		path = require('path'),
+		renderer;
+		
+	try {
+		renderer = require('stss');
+		logger.info('Loading global STSS renderer');
+	} catch (err) {
+		renderer = require(path.join(process.cwd(), 'node_modules', 'stss'));
+		logger.info('Loading local STSS renderer');
+	}
+
+	var platform = config.alloyConfig.platform,
+		platformDir = platform === 'ios' ? 'iphone' : config.alloyConfig.platform,
+		srcDirs = [
+			config.dir.styles,
+			path.join(config.dir.styles, platformDir)
+		],
+		files;
+
+	srcDirs.forEach(function(dir) {
+		if (fs.existsSync(dir)) {
+			files = fs.readdirSync(dir);
+			files.forEach(function(file) {
+				var inFile = path.join(dir, file),
+					outFile;
+
+				if (/\.stss$/.test(file) && fs.statSync(inFile).isFile()) {
+					outFile = path.join(path.dirname(inFile), path.basename(inFile, '.stss') + '.tss');
+					logger.info('Rendering STSS ' + file + ' to '+ outFile);
+					
+					// Convert STSS to TSS
+					renderer.renderSync({
+						file: inFile,
+						outFile: outFile,
+						error: function(err) {
+							if (err.title && err.line) {
+								logger.error('STSS: ' + err.title);
+								logger.error('');
+								logger.error(err.line);
+								logger.error('');
+								logger.error(err.processed);
+							} else {
+								logger.error(err.message);
+							}
+							err = {message: 'Error STSS conversion failed', toString: function() {return this.message;}};
+							throw (err);
+						}
+					});
+				}
+			});
+		}
+	});
+}

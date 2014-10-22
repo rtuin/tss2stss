@@ -1,0 +1,32 @@
+// "NavigationWindow": {
+	// orientationModes: [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT]
+// },
+// "#indexView": {
+	 // layout: "vertical",
+	 // top: 40
+// },
+// ".buttonbar": {
+	// top: 40,
+    // layout: 'composite',
+    // height: Ti.UI.SIZE,
+    // width: Ti.UI.FILL
+// },
+// "#logoImage": {
+	// top: 10
+// }
+// "#news": {
+	// left: 30
+// },
+// "#schedule": {
+// 	
+// }
+// ,
+// "#about": {
+	// right: 30
+// }
+".container": {
+	backgroundColor:"white",
+	orientationModes: [Ti.UI.PORTRAIT,Ti.UI.LANDSCAPE_LEFT,Ti.UI.LANDSCAPE_RIGHT,Ti.UI.UPSIDE_PORTRAIT],
+	navBarHidden: true,
+	exitOnClose: true
+}

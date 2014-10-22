@@ -23,3 +23,15 @@ var tss2stss = require('tss2stss');
 
 ### v.0.1.0
 * Initial release of this tool
+
+## Contributing
+Any help with development is welcome. Please take a look at the issues list if you want to work on something, or discuss
+a new feature.
+
+### Running the tests
+Currently the TSS to STSS conversion is tested using a Ti Alloy app that compiles the TSS files in the
+`tests/tss2stss-test-app/tss-fixtures` directory into STSS files in the `tests/tss2stss-test-app/app/styles` directory.
+After that a ti build is triggered and the stss hook compiles the STSS back to TSS, which are then validated by the
+ti build. If any errors occur during this process, you will see this in the console.
+
+You can run these tests by executing the `runtest.sh` file in the app's directory.

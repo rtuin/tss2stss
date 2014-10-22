@@ -1,0 +1,24 @@
+"#detailScrollView": {
+	width: Ti.UI.FILL,
+	contentWidth: '100%',
+},
+"#titleLabel": {
+	top: 5,
+	bottom: 5,
+	left: 5,
+	right: 5,
+	font: {
+		fontSize: 18,
+		fontStyle: 'normal',
+		fontWeight: 'bold'
+	}
+},
+"#postDateLabel": {
+	top: 5,
+	bottom: 5,
+	left: 5,
+	right: 5
+},
+"#contentLabel": {
+	height: Ti.UI.SIZE
+}

@@ -1,0 +1,15 @@
+".container": {
+	height: Ti.UI.SIZE
+},
+"#nameLabel": {
+	top: 5,
+	bottom: 5,
+	font: {
+		fontSize: 16,
+		fontStyle: 'normal',
+		fontWeight: 'bold'
+	}
+}
+"#pictureImage": {
+	borderRadius: 5
+}

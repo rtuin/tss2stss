@@ -1,0 +1,65 @@
+".detailScroll": {
+	width: Ti.UI.FILL,
+	contentWidth: '100%',
+	layout: 'vertical',
+	top: 5,
+	bottom: 5,
+	left: 5,
+	right: 5
+},
+"#titleLabel": {
+	top: 5,
+	bottom: 5,
+	font: {
+		fontSize: 18,
+		fontStyle: 'normal',
+		fontWeight: 'bold'
+	}
+},
+"#nameLabel": {
+	top: 5,
+	bottom: 5,
+	font: {
+		fontSize: 18,
+		fontStyle: 'normal',
+		fontWeight: 'bold'
+	}
+},
+"ImageView": {
+	borderRadius: 5
+},
+".metadata": {
+	top: 5,
+	height: Ti.UI.SIZE,
+	width: 200,
+	layout: 'vertical',
+	backgroundColor: "#ADC2FF",
+	borderColor: "#232733",
+	borderWidth: 2,
+	borderRadius: 3
+},
+".labelLine": {
+	layout: 'horizontal',
+	height: Ti.UI.SIZE,
+	left: 10,
+	top: 5,
+	bottom: 5
+},
+".metaBoldLabel": {
+	width: 100,
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: 10,
+		fontStyle: 'normal',
+		fontWeight: 'bold'
+	}
+},
+".metalabel": {
+	width: 150,
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: 10,
+		fontStyle: 'normal',
+		fontWeight: 'normal'
+	}
+}
