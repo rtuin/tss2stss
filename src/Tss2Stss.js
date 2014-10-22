@@ -1,3 +1,6 @@
+// Use of this source code is governed by a MIT-style license that can be 
+// found in the LICENSE file.
+
 var TssLexer = require('./tsslexer.js'),
     TssParser = require('./tssparser.js'),
     StssCompiler = require('./StssCompiler.js');
