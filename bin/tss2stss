@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-"use strict";
 var fs = require('fs'),
     mkdirp = require('mkdirp'),
     path = require('path'),
@@ -8,7 +7,7 @@ var fs = require('fs'),
     Tss2Stss = require(libPath + 'Tss2Stss.js'),
     argv = require('minimist')(process.argv.slice(2));
 
-if (argv._.length != 2) {
+if (argv._.length !== 2) {
     console.log('Please provide an input and output file.');
 }
 
@@ -19,13 +18,14 @@ var inputPath = argv._[0],
     converter = new Tss2Stss(),
     outputPath = argv._[1];
 
-inputFinder.on('file', function (file, stat) {
-    if (file.toLowerCase().indexOf('.tss') != file.length - 4) {
+inputFinder.on('file', function (file) {
+    'use strict';
+    if (file.toLowerCase().indexOf('.tss') !== file.length - 4) {
         return;
     }
 
     var normalizedPath = file.substr(inputPath.length);
-    if (normalizedPath.indexOf('/') == 0) {
+    if (normalizedPath.indexOf('/') === 0) {
         normalizedPath = normalizedPath.replace('/', '');
     }
 

@@ -1,31 +1,33 @@
-'use strict';
-
 var util = require('util');
 
 function TssParser() {
+    'use strict';
     this.nodes = [];
 }
 
-TssParser.prototype.parse = function(tssTokens) {
-    var nodes = {nodes: []};
-
-    var lastParsed = '',
+TssParser.prototype.parse = function (tssTokens) {
+    'use strict';
+    var nodes = {nodes: []},
+        lastParsed = '',
         expected = ['Selector'],
         scopeDepth = 0,
-        currentNode = nodes;
+        currentNode = nodes,
+        i,
+        token,
+        tokenType;
     function parseError(typeName, source, text, expected) {
-        for (var i = 0; i < tssTokens.length; i++) {
-            console.log(tssTokens[i].constructor.name);
-            console.log(util.inspect(tssTokens[i]));
+        var tokenErrorIndex;
+        for (tokenErrorIndex = 0; tokenErrorIndex < tssTokens.length; tokenErrorIndex++) {
+            console.log(util.inspect(tssTokens[tokenErrorIndex]));
         }
-        throw Error('Parse error: unexpected ' + typeName + '("' + text + '") after "' + source + '". Expected: ' + expected.join(', ') + ' Last parsed: ' + lastParsed);
+        throw new Error('Parse error: unexpected ' + typeName + '("' + text + '") after "' + source + '". Expected: ' + expected.join(', ') + ' Last parsed: ' + lastParsed);
     }
 
-    for (var i = 0; i < tssTokens.length; i++) {
-        var token = tssTokens[i];
+    for (i = 0; i < tssTokens.length; i++) {
+        token = tssTokens[i];
+        tokenType = token.constructor.name;
 
-        var tokenType = token.constructor.name;
-        if (expected.indexOf(tokenType) == -1) {
+        if (expected.indexOf(tokenType) === -1) {
             if (nodes.length) {
                 parseError(tokenType, nodes[nodes.length - 1].text, token.text, expected);
             } else {
@@ -35,30 +37,30 @@ TssParser.prototype.parse = function(tssTokens) {
 
         lastParsed = tokenType;
 
-        if (tokenType == 'Selector') {
+        if (tokenType === 'Selector') {
             expected = ['Definer'];
-        } else if (tokenType == 'Definer') {
+        } else if (tokenType === 'Definer') {
             expected = ['OpenScope'];
-        } else if (tokenType == 'OpenScope') {
+        } else if (tokenType === 'OpenScope') {
             scopeDepth++;
             expected = ['CloseScope', 'PropertyDefinition'];
-        } else if (tokenType == 'CloseScope') {
+        } else if (tokenType === 'CloseScope') {
             scopeDepth--;
             expected = ['ValueSeparator'];
             if (scopeDepth) {
                 expected.push('CloseScope');
             }
-        } else if (tokenType == 'PropertyDefinition') {
+        } else if (tokenType === 'PropertyDefinition') {
             scopeDepth++;
             expected = ['OpenScope', 'StyleValue'];
-        } else if (tokenType == 'ValueSeparator') {
+        } else if (tokenType === 'ValueSeparator') {
             expected = ['Selector', 'PropertyDefinition', 'CloseScope'];
-        } else if (tokenType == 'StyleValue') {
+        } else if (tokenType === 'StyleValue') {
             scopeDepth--;
             expected = ['ValueSeparator', 'CloseScope'];
         }
 
-        if (['ValueSeparator', 'Definer'].indexOf(tokenType) == -1) {
+        if (['ValueSeparator', 'Definer'].indexOf(tokenType) === -1) {
             currentNode.nodes.push({
                 type: tokenType,
                 text: token.string,
@@ -72,8 +74,9 @@ TssParser.prototype.parse = function(tssTokens) {
     return nodes;
 };
 
-TssParser.prototype.findLastNode = function(baseNode, scopeDepth) {
-    if (scopeDepth == 0 || baseNode.nodes.length == 0) {
+TssParser.prototype.findLastNode = function (baseNode, scopeDepth) {
+    'use strict';
+    if (scopeDepth === 0 || baseNode.nodes.length === 0) {
         return baseNode;
     }
     var deepestDirectChild = baseNode.nodes[baseNode.nodes.length - 1];

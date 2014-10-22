@@ -1,10 +1,10 @@
-"use strict";
-
 var TssLexer = require('./tsslexer.js'),
     TssParser = require('./tssparser.js'),
     StssCompiler = require('./StssCompiler.js');
 
-function Tss2Stss() {}
+function Tss2Stss() {
+    'use strict';
+}
 
 /**
  * Convert TSS input data to STSS output data
@@ -12,7 +12,8 @@ function Tss2Stss() {}
  * @param tssData
  * @returns {*}
  */
-Tss2Stss.prototype.convert = function(tssData) {
+Tss2Stss.prototype.convert = function (tssData) {
+    'use strict';
     var tssLexer = new TssLexer(),
         tssParser = new TssParser(),
         compiler = new StssCompiler(),

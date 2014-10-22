@@ -1,77 +1,86 @@
-'use strict';
 function StssCompiler() {
+    'use strict';
     this.depth = 0;
 }
 
 StssCompiler.prototype.compile = function (parsedTssNodes) {
-    var out = '';
-    var nodes = parsedTssNodes.nodes;
-    for (var i = 0; i < nodes.length; i++) {
-        var node = nodes[i],
-            compiled = '';
+    'use strict';
+    var out = '',
+        nodes = parsedTssNodes.nodes,
+        i = 0,
+        node,
+        compiled = '';
+    for (i = 0; i < nodes.length; i++) {
+        node = nodes[i];
+
+        compiled = '';
         switch (node.type) {
-            case 'Selector':
-                compiled = this.compileSelector(node);
-                break;
-            case 'PropertyDefinition':
-                compiled = this.compilePropertyDefinition(node);
-                break;
-            case 'StyleValue':
-                compiled = this.compileStyleValue(node);
-                break;
-            case 'OpenScope':
-                compiled = this.compileOpenScope(node);
-                break;
-            case 'CloseScope':
-                compiled = this.compileCloseScope(node);
-                break;
-            default:
-                throw Error('Compiling of type "' + node.type + '" is not implemented yet.');
-                break;
+        case 'Selector':
+            compiled = this.compileSelector(node);
+            break;
+        case 'PropertyDefinition':
+            compiled = this.compilePropertyDefinition(node);
+            break;
+        case 'StyleValue':
+            compiled = this.compileStyleValue(node);
+            break;
+        case 'OpenScope':
+            compiled = this.compileOpenScope(node);
+            break;
+        case 'CloseScope':
+            compiled = this.compileCloseScope(node);
+            break;
+        default:
+            throw new Error('Compiling of type "' + node.type + '" is not implemented yet.');
         }
         out += compiled;
     }
     return out;
 };
 
-StssCompiler.prototype.compileSelector = function(node) {
+StssCompiler.prototype.compileSelector = function (node) {
+    'use strict';
     var out = node.text.replace(/\"/g, '') + ' ';
     out += this.compile(node);
     return out;
 };
 
-StssCompiler.prototype.compilePropertyDefinition = function(node) {
+StssCompiler.prototype.compilePropertyDefinition = function (node) {
+    'use strict';
     return this.getIndentation() + this.normalizePropertyDefinitions(node.text) + ' ' + this.compile(node) + "\n";
 };
 
-StssCompiler.prototype.compileStyleValue = function(node) {
+StssCompiler.prototype.compileStyleValue = function (node) {
+    'use strict';
     return this.normalizeStyleValue(node.text) + ';';
 };
-StssCompiler.prototype.compileOpenScope = function(node) {
+StssCompiler.prototype.compileOpenScope = function (node) {
+    'use strict';
     this.depth++;
     return "{\n" + this.compile(node);
 };
-StssCompiler.prototype.compileCloseScope = function(node) {
+StssCompiler.prototype.compileCloseScope = function () {
+    'use strict';
     this.depth--;
     return this.getIndentation() + "}\n";
 };
-StssCompiler.prototype.getIndentation = function() {
-    if (this.depth == 0) {
+StssCompiler.prototype.getIndentation = function () {
+    'use strict';
+    if (this.depth === 0) {
         return '';
     }
-    return (new Array(this.depth+1)).join('    ');
+    return new Array(this.depth + 1).join('    ');
 };
 
 StssCompiler.prototype.normalizePropertyDefinitions = function (definition) {
+    'use strict';
     definition = definition.trim();
 
-    //if (definition.indexOf('font') != 0 && definition.indexOf('text')) {
-    //    return definition;
-    //}
-    return definition.replace(/([A-Z])/g, function (all, matchOne) { return '-' + matchOne.toLowerCase() });
+    return definition.replace(/([A-Z])/g, function (all, matchOne) { return '-' + matchOne.toLowerCase(); });
 };
 
 StssCompiler.prototype.normalizeStyleValue = function (value) {
+    'use strict';
     value = value.trim();
     return value.replace('Ti.UI.SIZE', '\'size\'');
 };
