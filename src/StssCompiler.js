@@ -85,7 +85,12 @@ StssCompiler.prototype.normalizePropertyDefinitions = function (definition) {
 StssCompiler.prototype.normalizeStyleValue = function (value) {
     'use strict';
     value = value.trim();
-    return value.replace('Ti.UI.SIZE', '\'size\'');
+    return value.replace('Ti.UI.SIZE', 'size')
+        .replace('Ti.UI.FILL', 'fill')
+        .replace('Ti.UI.TEXT_ALIGNMENT_LEFT', 'left')
+        .replace('Ti.UI.TEXT_ALIGNMENT_CENTER', 'center')
+        .replace('Ti.UI.TEXT_ALIGNMENT_RIGHT', 'right')
+        ;
 };
 
 module.exports = StssCompiler;

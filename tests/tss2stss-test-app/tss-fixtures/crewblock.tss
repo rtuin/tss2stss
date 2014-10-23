@@ -1,5 +1,9 @@
 ".container": {
-	height: Ti.UI.SIZE
+	height: Ti.UI.SIZE,
+	height: Ti.UI.FILL,
+	textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT,
+	textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
 },
 "#nameLabel": {
 	top: 5,
