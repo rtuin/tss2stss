@@ -21,7 +21,11 @@ var tss2stss = require('tss2stss');
 
 ## Changelog
 
-### v.0.1.0
+### v0.2.0
+* Shorthand notations like `left` instead of `Ti.UI.TEXT_ALIGNMENT_LEFT` are now optimised in the compiler
+* A simple testsuite has been added
+
+### v0.1.0
 * Initial release of this tool
 
 ## Contributing
