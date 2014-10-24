@@ -40,13 +40,12 @@ TssLexer.prototype.lex = function (tssString) {
         this.string = string;
     }
 
-
     function addStyleValue(match, rest, state) {
         tokens.push(new StyleValue(match[0]));
         return state.continuation(rest);
     }
 
-    INIT(/\"(#|\.)?[a-zA-Z0-9]+\"/)(function (match, rest, state) {
+    INIT(/\"(#|\.)?[a-zA-Z0-9]+(\[[a-zA-Z=\s]+\])*\"/)(function (match, rest, state) {
         if (tokens.length && tokens[tokens.length - 1].constructor.name === 'PropertyDefinition') {
             return addStyleValue(match, rest, state);
         }

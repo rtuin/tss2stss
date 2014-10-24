@@ -1,49 +1,50 @@
 "#aboutScroll": {
-	width: Ti.UI.FILL,
-	contentWidth: '100%',
-	layout: 'vertical',
-	top: 5,
-	bottom: 5,
-	left: 5,
-	right: 5
+    width: Ti.UI.FILL,
+    contentWidth: '100%',
+    layout: 'vertical',
+    top: 5,
+    bottom: 5,
+    left: 5,
+    right: 5
 },
-"#logoImage": {
-	top: 5,
-	left: 5,
-	right: 5,
-	bottom: 5,
-	width: Ti.UI.FILL,
-	height: Ti.UI.SIZE
+"#drawer[platform=ios]": {
+    top: 5,
+    left: 5,
+    right: 5,
+    bottom: 5,
+    width: Ti.UI.FILL,
+    height: Ti.UI.SIZE
 },
-"#sponsorsView": {
-	height: Ti.UI.SIZE,
-	layout: 'horizontal'
+"#nameLabel[formFactor=handheld]": {
+    height: Ti.UI.SIZE,
+    layout: 'horizontal'
 },
-"#crewView": {
-	height: Ti.UI.SIZE,
-	layout: 'vertical'
+".container[platform=ios formFactor=handheld]": {
+    height: Ti.UI.SIZE,
+    layout: 'horizontal'
+},
+"#crewView[platform=ios][formFactor=handheld]": {
+    height: Ti.UI.SIZE,
+    layout: 'horizontal'
 },
 "ImageView": {
-	borderRadius: 5
+    borderRadius: 5
 },
 ".header": {
-	top: 5,
-	bottom: 5,
-	font: {
-		fontSize: 18,
-		fontStyle: 'normal',
-		fontWeight: 'bold'
-	}
+    top: 5,
+    bottom: 5,
+    font: {
+        fontSize: 18,
+        fontStyle: 'normal',
+        fontWeight: 'bold'
+    }
 },
-".container": {
-	height: Ti.UI.SIZE
-},
-"#nameLabel": {
-	top: 5,
-	bottom: 5,
-	font: {
-		fontSize: 16,
-		fontStyle: 'normal',
-		fontWeight: 'bold'
-	}
+"a": {
+    top: 5,
+    bottom: 5,
+    font: {
+        fontSize: 16,
+        fontStyle: 'normal',
+        fontWeight: 'bold'
+    }
 }
