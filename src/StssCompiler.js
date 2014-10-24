@@ -15,6 +15,7 @@ StssCompiler.prototype.compile = function (parsedTssNodes) {
         compiled = '';
     for (i = 0; i < nodes.length; i++) {
         node = nodes[i];
+        node.parent = parsedTssNodes;
 
         compiled = '';
         switch (node.type) {
@@ -50,7 +51,7 @@ StssCompiler.prototype.compileSelector = function (node) {
 
 StssCompiler.prototype.compilePropertyDefinition = function (node) {
     'use strict';
-    return this.getIndentation() + this.normalizePropertyDefinitions(node.text) + ' ' + this.compile(node) + "\n";
+    return this.getIndentation() + this.normalizePropertyDefinitions(node) + ' ' + this.compile(node) + "\n";
 };
 
 StssCompiler.prototype.compileStyleValue = function (node) {
@@ -77,20 +78,28 @@ StssCompiler.prototype.getIndentation = function () {
 
 StssCompiler.prototype.normalizePropertyDefinitions = function (definition) {
     'use strict';
-    definition = definition.trim();
 
-    return definition.replace(/([A-Z])/g, function (all, matchOne) { return '-' + matchOne.toLowerCase(); });
+    var definitionText = definition.text.trim();
+    if (
+        definitionText.substr(0, 4) === 'font' &&
+        definition.parent.parent.type === 'PropertyDefinition' &&
+        definition.parent.parent.text === 'font:'
+    ) {
+        definitionText = definitionText.substr(4).replace(/([A-Z])/, function (all, matchOne) { return matchOne.charAt(0).toLowerCase() + matchOne.substr(1); });
+    }
+
+    return definitionText.replace(/([A-Z])/g, function (all, matchOne) { return '-' + matchOne.toLowerCase(); });
 };
 
 StssCompiler.prototype.normalizeStyleValue = function (value) {
     'use strict';
     value = value.trim();
+
     return value.replace('Ti.UI.SIZE', 'size')
         .replace('Ti.UI.FILL', 'fill')
         .replace('Ti.UI.TEXT_ALIGNMENT_LEFT', 'left')
         .replace('Ti.UI.TEXT_ALIGNMENT_CENTER', 'center')
-        .replace('Ti.UI.TEXT_ALIGNMENT_RIGHT', 'right')
-        ;
+        .replace('Ti.UI.TEXT_ALIGNMENT_RIGHT', 'right');
 };
 
 module.exports = StssCompiler;
