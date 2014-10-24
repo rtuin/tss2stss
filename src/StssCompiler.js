@@ -4,6 +4,23 @@
 function StssCompiler() {
     'use strict';
     this.depth = 0;
+    this.shortHands = {
+        'Selector': {
+            'ios': 'platform=ios',
+            'android': 'platform=android',
+            'blackberry': 'platform=blackberry',
+            'mobileweb': 'platform=mobileweb',
+            'handheld': 'formFactor=handheld',
+            'tablet': 'formFactor=tablet'
+        },
+        'StyleValue': {
+            'size': 'Ti.UI.SIZE',
+            'fill': 'Ti.UI.FILL',
+            'left': 'Ti.UI.TEXT_ALIGNMENT_LEFT',
+            'center': 'Ti.UI.TEXT_ALIGNMENT_CENTER',
+            'right': 'Ti.UI.TEXT_ALIGNMENT_RIGHT'
+        }
+    }
 }
 
 StssCompiler.prototype.compile = function (parsedTssNodes) {
@@ -42,9 +59,16 @@ StssCompiler.prototype.compile = function (parsedTssNodes) {
     return out;
 };
 
+StssCompiler.prototype.normalizeSelector = function (node) {
+    var nodeText = node.text.replace(/\"/g, '');
+    for (var shorthand in this.shortHands.Selector) {
+        nodeText = nodeText.replace(this.shortHands.Selector[shorthand], shorthand);
+    }
+    return nodeText;
+};
 StssCompiler.prototype.compileSelector = function (node) {
     'use strict';
-    var out = node.text.replace(/\"/g, '') + ' ';
+    var out = this.normalizeSelector(node) + ' ';
     out += this.compile(node);
     return out;
 };
@@ -95,11 +119,10 @@ StssCompiler.prototype.normalizeStyleValue = function (value) {
     'use strict';
     value = value.trim();
 
-    return value.replace('Ti.UI.SIZE', 'size')
-        .replace('Ti.UI.FILL', 'fill')
-        .replace('Ti.UI.TEXT_ALIGNMENT_LEFT', 'left')
-        .replace('Ti.UI.TEXT_ALIGNMENT_CENTER', 'center')
-        .replace('Ti.UI.TEXT_ALIGNMENT_RIGHT', 'right');
+    for (var shorthand in this.shortHands.StyleValue) {
+        value = value.replace(this.shortHands.StyleValue[shorthand], shorthand);
+    }
+    return value;
 };
 
 module.exports = StssCompiler;
