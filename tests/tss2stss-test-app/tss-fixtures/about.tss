@@ -47,4 +47,13 @@
         fontStyle: 'normal',
         fontWeight: 'bold'
     }
+},
+".this-is-a-test": {
+    color: "blue"
+},
+".this-is-a-test[formFactor=tablet]": {
+    color: "red"
+},
+".this-is-a-test[platform=ios if=Alloy.Globals.isIos7Plus]": {
+    color: "red"
 }
