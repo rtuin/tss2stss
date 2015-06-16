@@ -45,7 +45,7 @@ TssLexer.prototype.lex = function (tssString) {
         return state.continuation(rest);
     }
 
-    INIT(/\"(#|\.)?[a-zA-Z0-9]+(\[[a-zA-Z=\s]+\])*\"/)(function (match, rest, state) {
+    INIT(/\"(#|\.)?[a-zA-Z0-9\-]+(\[[a-zA-Z0-9=\s\.]+\])*\"/)(function (match, rest, state) {
         if (tokens.length && tokens[tokens.length - 1].constructor.name === 'PropertyDefinition') {
             return addStyleValue(match, rest, state);
         }
