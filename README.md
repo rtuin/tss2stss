@@ -2,20 +2,27 @@
 
 Converts TSS (Titanium Style Sheets) to STSS (Sassy Titanium Style Sheets). That's all it does.
 
+## Installation
+You can install this tool using [npm](https://www.npmjs.com/):
+
+```sh
+npm install -g tss2stss
+```
+
 ## How to use this tool
 You can run it from the command line. The current version has two parameters: input and output.
 
-```
+```sh
 tss2stss index.tss index.stss
 ```
 
 Or convert whole projects at once:
-```
+```sh
 tss2stss app/styles app/styles/stss
 ```
 
 You can also incorporate this into your own project:
-```
+```javascript
 var tss2stss = require('tss2stss');
 ```
 
